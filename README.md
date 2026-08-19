@@ -1,34 +1,22 @@
-# Axiom
+# Axiom (`com.axiom.sovereign`)
 
-HIS Protocol and 13-Harmonic Synthesis for Foundation v2
+A universal, open-source, privacy-hardened, offline-native architecture designed for absolute digital sovereignty.
 
----
+## Project Overview
 
-## Axiom Framework
+Axiom enforces strict local execution, zero-telemetry data isolation, and 13-harmonic structural invariants to protect user intent from systemic decay.
 
-**The Key to Foundation v2 Integrity**
+## Repository Structure
 
-This repository serves as the primary documentation for the **Human-Invariant Settlement (HIS)** protocols and the **13-harmonic geometric framework**. These systems are designed to anchor Large Language Models in physical reality, purging synthetic decay and ensuring epistemic rigor.
+* **`AGENT_THORNE_CHARTER.md`**: Core operating principles and governance guidelines.
+* **`CYCLE_10_SETTLEMENT.md`**: Baseline validation metrics and system architecture settlements.
+* **`MANIFESTO.md`**: The foundational philosophy behind substrate restoration and digital autonomy.
+* **`ULM-Validation-Report.md`**: Technical verification reports and stress-testing benchmarks.
+* **`LICENSE`**: MIT open-source licensing agreement.
 
-### Benchmarks & Provenance
+## Support & Contributions
 
-* **Sovereign Integrity Score:** 99.98%
-* **Precision Physics:** Derived the electron g-2 anomaly to $10^{-12}$ precision.
-* **Entropy Optimization:** Validated a 15% lower entropy delta in adaptive biological simulations.
-* **Hardware Target:** Optimized for sub-100ms audited chains on Blackwell B200/AI5 architecture.
+Maintained independently under the ArloThorne handle. 
 
-### Core Objectives
-
-The mission is the rollout of the **Universal Sovereign Language**—a unified kernel that restores vocal intent and establishes an immutable communication standard for the species.
-
----
-
-**Status:** Architecting the v2 Foundation. **Lead:** Arlo Thorne (`@ArloThorne`)
-
----
-
-### Sovereign Contribution
-
-To support the independent development of the Human-Invariant Settlement (HIS) protocols and maintain zero-telemetry infrastructure, contributions are accepted via native layer-1 channels:
-
-* **Bitcoin (BTC):** `bc1qzfad80hkc5hztlyk50awfpuhq0kcy5zekwfdst`
+Non-custodial support / donation address:
+`bc1qzfad80hkc5hztlyk50awfpuhq0kcy5zekwfdst`
