@@ -26,5 +26,12 @@
         "core_node_count": 7,
         "script_node_count": 11,
         "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 18:06:17",
+        "free_space_bytes": 102875394048,
+        "core_node_count": 7,
+        "script_node_count": 13,
+        "status": "NOMINAL"
     }
 ]
