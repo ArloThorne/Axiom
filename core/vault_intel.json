@@ -1,45 +1,23 @@
 {
-    "markdown_files_scanned": 7,
-    "top_keywords": [
-        [
-            "the",
-            46
-        ],
-        [
-            "and",
-            18
-        ],
-        [
-            "*",
-            16
-        ],
-        [
-            "##",
-            15
-        ],
-        [
-            "to",
-            12
-        ],
-        [
-            "a",
-            12
-        ],
-        [
-            "is",
-            11
-        ],
-        [
-            "we",
-            11
-        ],
-        [
-            "sovereign",
-            9
-        ],
-        [
-            "13-harmonic",
-            9
-        ]
-    ]
+    "AGENT_THORNE_CHARTER.md": {
+        "status": "indexed"
+    },
+    "CYCLE_10_SETTLEMENT.md": {
+        "status": "indexed"
+    },
+    "MANIFESTO.md": {
+        "status": "indexed"
+    },
+    "README.md": {
+        "status": "indexed"
+    },
+    "ULM-Validation-Report.md": {
+        "status": "indexed"
+    },
+    "sovereign_state.md": {
+        "status": "indexed"
+    },
+    "core/manifest.md": {
+        "status": "indexed"
+    }
 }

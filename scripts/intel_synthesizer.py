@@ -21,4 +21,4 @@ def synthesize_intel():
     print(f"[INTEL] Synthesis complete. {len(vault_index)} notes cataloged.")
 
 if __name__ == "__main__":
-    synthesizer_intel()
+    synthesize_intel()
