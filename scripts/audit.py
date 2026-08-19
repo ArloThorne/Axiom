@@ -8,7 +8,8 @@ def audit_environment():
     for d in required_dirs:
         path = os.path.join(root_path, d)
         exists = os.path.isdir(path)
-        print(f"[CHECK] Directory '{d}' -> {'VERIFIED' :< 10} (Exists: {exists})")
+        status_str = "VERIFIED" if exists else "MISSING"
+        print(f"[CHECK] Directory '{d}' -> {status_str} (Exists: {exists})")
         
     print("[AUDIT] Sovereign environment audit complete. All subsystems green.")
 
