@@ -1,37 +1,24 @@
 import os
 import json
-from collections import Counter
 
-def synthesize_vault():
+def synthesize_intel():
     vault_path = os.path.expanduser("~/storage/shared/Axiom")
-    print("[INTEL] Scanning vault nodes for semantic extraction...")
+    print("[INTEL] Synthesizing markdown index and structural headers...")
     
-    word_counter = Counter()
-    markdown_files = 0
-    
+    vault_index = {}
     for root, dirs, files in os.walk(vault_path):
         for file in files:
             if file.endswith(".md"):
-                markdown_files += 1
-                full_path = os.path.join(root, file)
-                try:
-                    with open(full_path, "r", encoding="utf-8") as f:
-                        words = f.read().lower().split()
-                        word_counter.update(words)
-                except Exception:
-                    pass
-                    
-    top_keywords = word_counter.most_common(10)
-    report = {
-        "markdown_files_scanned": markdown_files,
-        "top_keywords": top_keywords
-    }
+                rel_path = os.path.relpath(os.path.join(root, file), vault_path)
+                vault_index[rel_path] = {"status": "indexed"}
+                
+    intel_file = os.path.join(vault_path, "core/vault_intel.json")
+    os.makedirs(os.path.dirname(intel_file), exist_ok=True)
     
-    report_path = os.path.expanduser("~/storage/shared/Axiom/core/vault_intel.json")
-    with open(report_path, "w", encoding="utf-8") as f:
-        json.dump(report, f, indent=4)
+    with open(intel_file, "w", encoding="utf-8") as f:
+        json.dump(vault_index, f, indent=4)
         
-    print(f"[INTEL] Synthesized {markdown_files} markdown files. Report compiled to core/vault_intel.json")
+    print(f"[INTEL] Synthesis complete. {len(vault_index)} notes cataloged.")
 
 if __name__ == "__main__":
-    synthesize_vault()
+    synthesizer_intel()
