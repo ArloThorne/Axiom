@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+import sys
+import subprocess
+import os
+
+def main():
+    if len(sys.argv) < 2:
+        print("Usage: axiom [run|check|monitor|backup|health|bootstrap|sync|purge|audit|telemetry|compile]")
+        sys.exit(1)
+        
+    cmd = sys.argv[1]
+    root_path = os.path.expanduser("~/storage/shared/Axiom")
+    
+    mapping = {
+        "net": "scripts/net_check.py",
+        "check": "scripts/integrity_check.py",
+        "monitor": "scripts/sys_monitor.py",
+        "backup": "scripts/backup_vault.py",
+        "health": "scripts/health_daemon.py",
+        "bootstrap": "scripts/env_bootstrap.py",
+        "sync": "scripts/sync_daemon.py",
+        "purge": "scripts/workspace_purge.py",
+        "audit": "scripts/vault_audit.py",
+        "telemetry": "scripts/telemetry_audit.py",
+        "compile": "scripts/compile_bytecode.py"
+    }
+    
+    if cmd in mapping:
+        script_path = os.path.join(root_path, mapping[cmd])
+        subprocess.run(["python3", script_path])
+    else:
+        print(f"Unknown Axiom command: {cmd}")
+
+if __name__ == "__main__":
+    main()

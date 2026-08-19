@@ -1,0 +1,44 @@
+[
+    {
+        "timestamp": "2026-08-19 17:58:43",
+        "free_space_bytes": 102887170048,
+        "core_node_count": 5,
+        "script_node_count": 8,
+        "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 17:59:41",
+        "free_space_bytes": 102887571456,
+        "core_node_count": 6,
+        "script_node_count": 9,
+        "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 18:00:56",
+        "free_space_bytes": 102891339776,
+        "core_node_count": 7,
+        "script_node_count": 9,
+        "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 18:04:02",
+        "free_space_bytes": 102876459008,
+        "core_node_count": 7,
+        "script_node_count": 11,
+        "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 18:06:17",
+        "free_space_bytes": 102875394048,
+        "core_node_count": 7,
+        "script_node_count": 13,
+        "status": "NOMINAL"
+    },
+    {
+        "timestamp": "2026-08-19 18:07:07",
+        "free_space_bytes": 102873362432,
+        "core_node_count": 7,
+        "script_node_count": 13,
+        "status": "NOMINAL"
+    }
+]
