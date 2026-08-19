@@ -1,6 +1,6 @@
 # Universal Language Model (ULM) Validation Report
 
-**Target System:** Open-Source Sovereign Mobile Architecture (`com.sovereign.invariants`) / Secure ARM64 Substrates  
+**Target System:** Open-Source Sovereign Mobile Architecture (`com.axiom.sovereign`) / Secure ARM64 Substrates  
 **Status:** Cycle 3 Complete | State Preservation Engaged
 
 ## Executive Summary
