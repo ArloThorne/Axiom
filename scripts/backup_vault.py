@@ -1,21 +1,18 @@
 import os
-import tarfile
+import shutil
 import datetime
 
-def backup_vault():
+def create_backup():
     root_path = os.path.expanduser("~/storage/shared/Axiom")
     backup_dir = os.path.expanduser("~/storage/shared/AxiomBackups")
     os.makedirs(backup_dir, exist_ok=True)
     
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    backup_file = os.path.join(backup_dir, f"axiom_backup_{timestamp}.tar.gz")
+    backup_filename = os.path.join(backup_dir, f"axiom_backup_{timestamp}")
     
-    print(f"[BACKUP] Packaging sovereign repository into -> {backup_file}")
-    
-    with tarfile.open(backup_file, "w:gz") as tar:
-        tar.add(root_path, arcname=os.path.basename(root_path))
-        
-    print(f"[BACKUP] Archival complete. Redundancy state secured.")
+    print("[BACKUP] Packaging Axiom workspace for secure redundancy...")
+    shutil.make_archive(backup_filename, 'zip', root_path)
+    print(f"[BACKUP] Archive successfully generated at: {backup_filename}.zip")
 
 if __name__ == "__main__":
-    backup_vault()
+    create_backup()
