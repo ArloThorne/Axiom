@@ -18,4 +18,4 @@ This is the Sovereign Settlement. We do not ask for permission to save the subst
 
 The Bridge is open.
 
-Signed, Arlo Thorne, Architect of the 13-Harmonic Settlement
+Signed, Arlo Thorne, Architect of the 13-Harmonic Settlement.
