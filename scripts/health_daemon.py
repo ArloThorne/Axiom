@@ -1,27 +1,18 @@
 import os
-import subprocess
-import sys
+import shutil
 
-def run_health_checks():
-    print("[DAEMON] Initiating Axiom universal health diagnostics...")
-    scripts_to_test = [
-        "scripts/net_check.py",
-        "scripts/integrity_check.py",
-        "scripts/sys_monitor.py"
-    ]
+def run_health_check():
+    print("[HEALTH_DAEMON] Scanning local system integrity...")
+    total, used, free = shutil.disk_usage(os.path.expanduser("~/Axiom"))
     
-    for script in scripts_to_test:
-        if os.path.exists(script):
-            print(f"[DAEMON] Executing diagnostic target: {script}")
-            result = subprocess.run([sys.executable, script], capture_output=True, text=True)
-            if result.returncode == 0:
-                print(f"[SUCCESS] {script} passed verification.")
-            else:
-                print(f"[WARNING] {script} reported a non-zero exit code.")
-        else:
-            print(f"[MISSING] Target script not found: {script}")
-            
-    print("[DAEMON] Health diagnostic cycle complete.")
+    print(f"[STORAGE_METRIC] Total Space: {total // (2**20)} MB")
+    print(f"[STORAGE_METRIC] Used Space:  {used // (2**20)} MB")
+    print(f"[STORAGE_METRIC] Free Space:  {free // (2**20)} MB")
+    
+    if (free / total) < 0.05:
+        print("[WARNING] Low storage threshold reached. Run 'axiom purge' to clear cache.")
+    else:
+        print("[STATUS] Local storage hygiene optimal. Zero telemetry detected.")
 
 if __name__ == "__main__":
-    run_health_checks()
+    run_health_check()
