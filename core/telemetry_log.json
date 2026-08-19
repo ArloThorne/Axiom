@@ -1,0 +1,9 @@
+[
+    {
+        "timestamp": "2026-08-19 17:58:43",
+        "free_space_bytes": 102887170048,
+        "core_node_count": 5,
+        "script_node_count": 8,
+        "status": "NOMINAL"
+    }
+]
