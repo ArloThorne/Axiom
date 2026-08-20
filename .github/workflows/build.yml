@@ -3,19 +3,32 @@ name: Build APK
 on: [push]
 
 jobs:
-  build-android:
-    name: Build for Android
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        id: buildozer
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          buildozer_version: stable
-      - name: Upload artifacts
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential git python3-dev ccache libffi-dev libssl-dev zlib1g-dev python3-pip libltdl-dev
+
+      - name: Install Buildozer and Cython
+        run: |
+          pip install --upgrade pip
+          pip install cython==0.29.33 buildozer
+
+      - name: Build with Buildozer
+        run: |
+          buildozer -v android debug
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: AxiomAPK
-          path: ${{ steps.buildozer.outputs.filename }}
+          path: bin/*.apk
