@@ -15,3 +15,4 @@ android.ndk = 25b
 android.gradle_dependencies = 
 android.skip_update = False
 android.enable_androidx = True
+android.add_gradle_repositories = maven { url 'https://maven.google.com' }
