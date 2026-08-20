@@ -35,7 +35,7 @@ jobs:
 
       - name: Run Buildozer
         run: |
-          buildozer -v android debug log_level=2
+          buildozer -v android debug
         env:
           PYTHONUNBUFFERED: 1
 
