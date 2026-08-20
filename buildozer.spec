@@ -12,6 +12,7 @@ android.accept_sdk_license = True
 android.api = 31
 android.minapi = 21
 android.ndk = 25b
+android.build_tools_version = 33.0.2
 android.gradle_dependencies = 
 android.skip_update = False
 android.enable_androidx = True
