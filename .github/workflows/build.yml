@@ -20,13 +20,11 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v4
-        with:
-          path: ~/.buildozer
-          key: ${{ runner.os }}-buildozer-${{ hashFiles('buildozer.spec') }}-${{ hashFiles('*.py') }}
-          restore-keys: |
-            ${{ runner.os }}-buildozer-
+      - name: Clean Buildozer Cache Permissions
+        run: |
+          sudo rm -rf ~/.buildozer
+          sudo mkdir -p ~/.buildozer
+          sudo chown -R $USER:$USER ~/.buildozer
 
       - name: Install System Dependencies
         run: |
