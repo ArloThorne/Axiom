@@ -35,7 +35,9 @@ jobs:
 
       - name: Run Buildozer
         run: |
-          buildozer -v android debug
+          buildozer -v android debug log_level=2
+        env:
+          PYTHONUNBUFFERED: 1
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
