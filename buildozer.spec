@@ -11,3 +11,4 @@ fullscreen = 0
 android.accept_sdk_license = True
 android.api = 31
 android.minapi = 21
+android.ndk = 25b
