@@ -14,3 +14,7 @@ android.minapi = 21
 android.ndk = 25b
 android.skip_update = False
 android.enable_androidx = True
+
+[buildozer]
+log_level = 2
+warn_on_root = 0
