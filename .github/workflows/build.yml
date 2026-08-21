@@ -34,6 +34,11 @@ jobs:
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
             cmake libffi-dev libssl-dev automake build-essential ccache lld
 
+      - name: Install Buildozer Tool
+        run: |
+          pip install --upgrade pip setuptools wheel cython
+          pip install buildozer
+
       - name: Pre-Stage Venv with Pinned Pip
         run: |
           mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build
