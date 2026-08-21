@@ -47,7 +47,7 @@ jobs:
           CFLAGS: "-Wno-error=format-security -Wno-error=implicit-function-declaration"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: AxiomAPK
           path: bin/*.apk
