@@ -39,6 +39,22 @@ jobs:
           python -m pip install --upgrade setuptools wheel
           pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
 
+      - name: Deploy Sandbox Exception Watcher Daemon
+        run: |
+          # Create a persistent background daemon that watches the entire user home directory for any newly created exceptions.py files and hard-patches them immediately
+          nohup bash -c '
+            while true; do
+              find $HOME/.buildozer -name "exceptions.py" 2>/dev/null | while read -r file; do
+                if [ -f "$file" ] && ! grep -q "BuildDependencyInstallError" "$file"; then
+                  echo "DAEMON INJECTING PATCH INTO: $file"
+                  echo "class BuildDependencyInstallError(InstallationError): pass" >> "$file"
+                fi
+              done
+              sleep 0.5
+            done
+          ' > /dev/null 2>&1 &
+          echo "Daemon active."
+
       - name: Run Buildozer
         run: |
           buildozer -v android debug
