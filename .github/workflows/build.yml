@@ -39,10 +39,30 @@ jobs:
           python -m pip install --upgrade setuptools wheel
           pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
 
-      - name: Run Buildozer
+      - name: Run Buildozer with Exception Patch Monitor
         run: |
+          # Run buildozer in background, and poll for the inner venv creation to patch pip's exceptions.py dynamically
+          (
+            while true; do
+              if [ -d "$HOME/.buildozer" ]; then
+                FIND_FILE=$(find $HOME/.buildozer -name "exceptions.py" | grep "pip/_internal/exceptions.py" | head -n 1)
+                if [ -n "$FIND_FILE" ] && ! grep -q "BuildDependencyInstallError" "$FIND_FILE"; then
+                  echo "Patching missing BuildDependencyInstallError in $FIND_FILE"
+                  echo "class BuildDependencyInstallError(InstallationError): pass" >> "$FIND_FILE"
+                  break
+                fi
+              fi
+              sleep 2
+            done
+          ) &
+          
           buildozer -v android debug
         env:
           PYTHONUNBUFFERED: 1
           CFLAGS: "-Wno-error=format-security -Wno-error=implicit-function-declaration"
-          PIP_NO_BUILD_ISOLATION: "True"
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AxiomAPK
+          path: bin/*.apk
