@@ -15,7 +15,7 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Set up Python
+      - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -34,53 +34,20 @@ jobs:
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
             cmake libffi-dev libssl-dev automake build-essential ccache lld
 
-      - name: Install Toolchain Base
+      - name: Pre-Stage Venv with Pinned Pip
         run: |
-          python -m pip install --upgrade setuptools wheel
-          pip install "pip<24.0"
-          pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
+          mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build
+          python3 -m venv ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv
+          ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv/bin/pip install --upgrade "pip==23.3.1" setuptools wheel cython
 
-      - name: Run Buildozer with Venv Pip Interception
+      - name: Run Buildozer Foreground Build
         run: |
-          set -e
-          
-          downgrade_venv_pip() {
-            local venv_bin=$1
-            if [ -f "$venv_bin/pip" ]; then
-              echo "📌 Found venv pip at: $venv_bin/pip"
-              "$venv_bin/pip" install --upgrade "pip==23.3.1" setuptools wheel 2>&1 | tail -5
-              echo "✅ Venv pip pinned to <24.0"
-            fi
-          }
-          
-          buildozer -v android debug &
-          BUILD_PID=$!
-          
-          echo "🔍 Monitoring for buildozer venv creation..."
-          for i in {1..600}; do
-            sleep 1
-            
-            if [ -f ".buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv/bin/pip" ]; then
-              downgrade_venv_pip ".buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv/bin"
-              break
-            elif [ -f ".buildozer/android/platform/build-arm64-v8a/build/venv/bin/pip" ]; then
-              downgrade_venv_pip ".buildozer/android/platform/build-arm64-v8a/build/venv/bin"
-              break
-            elif [ -f ".buildozer/android/platform/build-armeabi-v7a/build/venv/bin/pip" ]; then
-              downgrade_venv_pip ".buildozer/android/platform/build-armeabi-v7a/build/venv/bin"
-              break
-            fi
-            
-            if ! kill -0 $BUILD_PID 2>/dev/null; then
-              wait $BUILD_PID
-              exit $?
-            fi
-          done
-          
-          wait $BUILD_PID || exit 1
+          buildozer -v android debug
         env:
           PYTHONUNBUFFERED: 1
           CFLAGS: "-Wno-error=format-security -Wno-error=implicit-function-declaration"
+          PYTHON: /opt/hostedtoolcache/Python/3.10.21/x64/bin/python3
+          PYTHONEXECUTABLE: /opt/hostedtoolcache/Python/3.10.21/x64/bin/python3
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
