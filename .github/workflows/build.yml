@@ -34,7 +34,7 @@ jobs:
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
             cmake libffi-dev libssl-dev automake build-essential ccache lld
 
-      - name: Install Toolchain & Pin Pip Wheels
+      - name: Install Stable Toolchain Matrix
         run: |
           python -m pip install --upgrade setuptools wheel
           pip install pip==23.3.2
