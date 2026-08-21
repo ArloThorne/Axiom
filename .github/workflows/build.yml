@@ -34,17 +34,10 @@ jobs:
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
             cmake libffi-dev libssl-dev automake build-essential ccache lld
 
-      - name: Install Toolchain Base & Pre-Patch p4a
+      - name: Install Toolchain Base
         run: |
           python -m pip install --upgrade setuptools wheel
           pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
-          
-          # Locate python-for-android installation and inject compatibility hook for pip exceptions
-          P4A_DIR=$(python -c "import python_for_android; import os; print(os.path.dirname(python_for_android.__file__))")
-          echo "Injecting compatibility hooks into p4a at $P4A_DIR"
-          
-          # Find where p4a handles pip bootstrapping or virtual environments and ensure safety
-          find "$P4A_DIR" -type f -name "*.py" | xargs grep -l "BuildDependencyInstallError" || true
 
       - name: Run Buildozer
         run: |
