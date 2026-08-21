@@ -15,47 +15,24 @@ jobs:
           distribution: 'temurin'
           java-version: '11'
 
-      - name: Set up Python 3.10
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Purge Stale Buildozer Caches
-        run: |
-          sudo rm -rf ~/.buildozer
-          sudo mkdir -p ~/.buildozer
-          sudo chown -R $USER:$USER ~/.buildozer
-
-      - name: Install System Dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            git zip unzip openjdk-11-jdk autoconf libtool libltdl-dev \
-            pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
-            cmake libffi-dev libssl-dev automake build-essential ccache lld
+          sudo apt-get install -y git zip unzip openjdk-11-jdk autoconf libtool libltdl-dev pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
 
-      - name: Install Buildozer Tool
-        run: |
-          pip install --upgrade pip setuptools wheel cython
-          pip install buildozer
+      - name: Build with Buildozer
+        uses: ArtemSBulgakov/buildozer-action@v1
+        with:
+          command: android debug
+          buildozer_version: master
 
-      - name: Pre-Stage Venv with Pinned Pip
-        run: |
-          mkdir -p ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build
-          python3 -m venv ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv
-          ~/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/venv/bin/pip install --upgrade "pip==23.3.1" setuptools wheel cython
-
-      - name: Run Buildozer Foreground Build
-        run: |
-          buildozer -v android debug
-        env:
-          PYTHONUNBUFFERED: 1
-          CFLAGS: "-Wno-error=format-security -Wno-error=implicit-function-declaration"
-          PYTHON: /opt/hostedtoolcache/Python/3.10.21/x64/bin/python3
-          PYTHONEXECUTABLE: /opt/hostedtoolcache/Python/3.10.21/x64/bin/python3
-
-      - name: Upload Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: AxiomAPK
+          name: package
           path: bin/*.apk
