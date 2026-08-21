@@ -34,26 +34,13 @@ jobs:
             pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 \
             cmake libffi-dev libssl-dev automake build-essential ccache lld
 
-      - name: Install Toolchain Base
+      - name: Install Toolchain and Force Pip Safety
         run: |
           python -m pip install --upgrade setuptools wheel
-          pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
-
-      - name: Deploy Sandbox Exception Watcher Daemon
-        run: |
-          # Create a persistent background daemon that watches the entire user home directory for any newly created exceptions.py files and hard-patches them immediately
-          nohup bash -c '
-            while true; do
-              find $HOME/.buildozer -name "exceptions.py" 2>/dev/null | while read -r file; do
-                if [ -f "$file" ] && ! grep -q "BuildDependencyInstallError" "$file"; then
-                  echo "DAEMON INJECTING PATCH INTO: $file"
-                  echo "class BuildDependencyInstallError(InstallationError): pass" >> "$file"
-                fi
-              done
-              sleep 0.5
-            done
-          ' > /dev/null 2>&1 &
-          echo "Daemon active."
+          pip install cython==0.29.33 buildozer==1.5.0
+          # Install a pip version that doesn't strip internal compatibility or use local source injection
+          pip install "pip<24.0"
+          pip install python-for-android==2024.1.21
 
       - name: Run Buildozer
         run: |
