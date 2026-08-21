@@ -4,21 +4,21 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Set up Java
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v2
         with:
-          distribution: 'temurin'
+          distribution: 'adopt'
           java-version: '11'
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.9'
 
       - name: Purge Stale Buildozer Caches
         run: |
@@ -39,30 +39,15 @@ jobs:
           python -m pip install --upgrade setuptools wheel
           pip install cython==0.29.33 buildozer==1.5.0 python-for-android==2024.1.21
 
-      - name: Run Buildozer with Exception Patch Monitor
+      - name: Run Buildozer
         run: |
-          # Run buildozer in background, and poll for the inner venv creation to patch pip's exceptions.py dynamically
-          (
-            while true; do
-              if [ -d "$HOME/.buildozer" ]; then
-                FIND_FILE=$(find $HOME/.buildozer -name "exceptions.py" | grep "pip/_internal/exceptions.py" | head -n 1)
-                if [ -n "$FIND_FILE" ] && ! grep -q "BuildDependencyInstallError" "$FIND_FILE"; then
-                  echo "Patching missing BuildDependencyInstallError in $FIND_FILE"
-                  echo "class BuildDependencyInstallError(InstallationError): pass" >> "$FIND_FILE"
-                  break
-                fi
-              fi
-              sleep 2
-            done
-          ) &
-          
           buildozer -v android debug
         env:
           PYTHONUNBUFFERED: 1
           CFLAGS: "-Wno-error=format-security -Wno-error=implicit-function-declaration"
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
           name: AxiomAPK
           path: bin/*.apk
